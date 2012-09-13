@@ -11,14 +11,17 @@ module Lazy
       def move(args)
         undock
         engine.action(id, :move_resize, *args)
+        log("move")
       end
 
       def close
         engine.action(id, :close)
+        log("close")
       end
 
       def focus
         engine.action(id, :activate)
+        log("focus")
       end
 
       def undock
@@ -37,6 +40,13 @@ module Lazy
         @created_at = Time.now
         self
       end
+
+      private
+
+      def log(status)
+        puts "[#{status} window] id: #{id} time: #{Time.now.strftime("%H:%M:%S")}"
+      end
+
     end
   end
 end
