@@ -14,4 +14,12 @@ Gem::Specification.new do |gem|
   gem.name          = "lazy"
   gem.require_paths = ["lib"]
   gem.version       = Lazy::VERSION
+
+  gem.add_development_dependency "rspec"
+  gem.add_development_dependency "pry"
+  # gem.add_development_dependency "libnotify"
+  gem.add_development_dependency "guard-rspec"
+  gem.add_development_dependency "simplecov"
+  gem.add_development_dependency "fuubar"
+  gem.add_development_dependency 'rb-inotify', '~> 0.8.8'
 end
