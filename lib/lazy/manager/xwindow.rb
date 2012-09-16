@@ -11,7 +11,7 @@ module Lazy
       def move(args)
         undock
         engine.action(id, :move_resize, *args)
-        log("move")
+        # log("move")
       end
 
       def close
@@ -44,7 +44,7 @@ module Lazy
       private
 
       def log(status)
-        puts "[#{status} window] id: #{id} time: #{Time.now.strftime("%H:%M:%S")}"
+        # puts "[#{status} window] id: #{id} time: #{Time.now.strftime("%H:%M:%S")}"
       end
 
     end
