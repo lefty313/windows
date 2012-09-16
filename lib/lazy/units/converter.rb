@@ -10,12 +10,16 @@ module Lazy
           @el      = el
           @options = options
         end
+
+        def run
+          raise "you must implement this method"
+        end
       end
 
       module Formats
         class Percent < Base
           def run
-            raise "you must specifyc base options to change number to percent" unless options[:base]
+            raise "you must specify options[:base] to change number to percent" unless options[:base]
             options[:base].percent(el)
           end
         end

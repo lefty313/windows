@@ -2,7 +2,8 @@ require 'spec_helper'
 require 'time'
 require 'lazy/manager/xwindow'
 
-class WMCtrl; end
+Lazy = Lazy
+class Lazy::WMCtrl; end
 class DummyEngine;end
 class DummyWindow < Struct.new(:id, :title);end
 
@@ -61,7 +62,7 @@ describe Lazy::Manager::XWindow do
   context "initialize" do
     it "should use WMCtrl as default engine" do
       object = subject.class.new(nil,command)
-      object.engine.should be_instance_of(WMCtrl)
+      object.engine.should be_instance_of(Lazy::WMCtrl)
     end
   end
 
