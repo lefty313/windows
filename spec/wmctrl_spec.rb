@@ -1,7 +1,7 @@
 require 'spec_helper'
-require 'windows/wmctrl'
+require 'windows/engines/wmctrl'
 
-describe Windows::WMCtrl do
+describe Windows::Engines::WMCtrl do
   before :each do
     create_windows
     create_desktops

@@ -1,5 +1,5 @@
 module Windows
-  module Manager
+  module Engines
     class XWindow
       attr_reader :engine, :command, :id, :title, :created_at
 
