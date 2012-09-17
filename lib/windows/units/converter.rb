@@ -1,7 +1,7 @@
-module Lazy
+module Windows
   module Units
     module Converter
-      require 'lazy/core_ext/numeric'
+      require 'windows/core_ext/numeric'
 
       class Base 
         attr_reader :el, :options

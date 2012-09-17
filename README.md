@@ -1,2 +1,2 @@
-lazy
+windows
 ====

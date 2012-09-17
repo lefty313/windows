@@ -1,6 +1,6 @@
-require 'lazy/structures'
+require 'windows/structures'
 
-module Lazy
+module Windows
 
   class WMCtrl
     include Structures

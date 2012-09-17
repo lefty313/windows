@@ -1,8 +1,8 @@
 require 'spec_helper'
-require 'lazy/structures/desktop'
+require 'windows/structures/desktop'
 
-describe Lazy::Structures::Desktop do
-  subject { Lazy::Structures::Desktop.new(id,geometry) }
+describe Windows::Structures::Desktop do
+  subject { Windows::Structures::Desktop.new(id,geometry) }
   let(:id)       { 1 }
   let(:geometry) { [800,600] }
 

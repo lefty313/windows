@@ -1,7 +1,7 @@
-require 'lazy/units/converter'
-require 'lazy/units/recognizer'
+require 'windows/units/converter'
+require 'windows/units/recognizer'
 
-module Lazy
+module Windows
   module Units
     class Geometry < Struct.new(:x, :y, :w, :h)
       def inspect

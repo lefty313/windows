@@ -1,4 +1,4 @@
-module Lazy
+module Windows
   module Structures
     class Desktop < Struct.new(:id, :geometry)
       def width

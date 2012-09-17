@@ -1,10 +1,10 @@
 require 'spec_helper'
-require 'lazy/units/unit_converter'
+require 'windows/units/unit_converter'
 
-describe Lazy::Units::Converter::Finder do
+describe Windows::Units::Converter::Finder do
   let(:el)                { 1000 }
   let(:supported_formats) { [:percent, :pixel] }  
-  subject                 { Lazy::Units::Converter::Finder.new(el) }
+  subject                 { Windows::Units::Converter::Finder.new(el) }
 
   it '#to(:percent, base)' do
     format = :percent
@@ -23,9 +23,9 @@ describe Lazy::Units::Converter::Finder do
 
 end
 
-describe Lazy::Units::UnitConverter do
+describe Windows::Units::UnitConverter do
   let(:desktop) { Struct.new(:width, :height).new(800,600) }
-  subject       { Lazy::Units::UnitConverter.new(desktop, *args) }
+  subject       { Windows::Units::UnitConverter.new(desktop, *args) }
 
   describe "#convert" do
     context "pixels" do

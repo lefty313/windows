@@ -1,4 +1,4 @@
-module Lazy
+module Windows
   module Units
     module Recognizer
       module Formats

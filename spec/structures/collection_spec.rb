@@ -1,11 +1,11 @@
 require 'spec_helper'
-require 'lazy/structures/collection'
+require 'windows/structures/collection'
 
 class DummyStruct < Struct.new(:id)
 end
 
-describe Lazy::Structures::Collection do
-  let(:klass) { Lazy::Structures::Collection }
+describe Windows::Structures::Collection do
+  let(:klass) { Windows::Structures::Collection }
 
   let(:collection_a) { klass.new [DummyStruct.new(1), DummyStruct.new(2)] }
   let(:collection_b) { klass.new collection_a.clone.push(DummyStruct.new(3)) }

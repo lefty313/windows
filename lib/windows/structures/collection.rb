@@ -1,4 +1,4 @@
-module Lazy
+module Windows
   module Structures
     class Collection < SimpleDelegator
       def ids

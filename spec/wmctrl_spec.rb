@@ -1,7 +1,7 @@
 require 'spec_helper'
-require 'lazy/wmctrl'
+require 'windows/wmctrl'
 
-describe Lazy::WMCtrl do
+describe Windows::WMCtrl do
   before :each do
     create_windows
     create_desktops
@@ -15,13 +15,13 @@ describe Lazy::WMCtrl do
       desktop[:geometry].should == desktop_window.geometry         
     end
 
-    list.should be_instance_of(Lazy::Structures::Collection)
+    list.should be_instance_of(Windows::Structures::Collection)
   end
 
   it "#find_desktops" do
     desktop = subject.find_desktop(1)
     desktop.id.should == 1
-    desktop.should be_instance_of(Lazy::Structures::Desktop)
+    desktop.should be_instance_of(Windows::Structures::Desktop)
   end
 
   context "#windows" do
@@ -40,7 +40,7 @@ describe Lazy::WMCtrl do
         stub[:geometry][4].should == window.height
       end
 
-      list.should be_instance_of(Lazy::Structures::Collection)
+      list.should be_instance_of(Windows::Structures::Collection)
     end
 
     it 'return sorted by :id' do
@@ -53,7 +53,7 @@ describe Lazy::WMCtrl do
   it "#find_windows" do
     window = subject.find_window(2)
     window.id.should == 2
-    window.should be_instance_of Lazy::Structures::Window
+    window.should be_instance_of Windows::Structures::Window
   end
 
   it "#action" do
@@ -68,7 +68,7 @@ describe Lazy::WMCtrl do
 
   def desktops
     unless @desktops
-      klass = Lazy::Structures::Desktop
+      klass = Windows::Structures::Desktop
       @desktops = []
       @desktops.push({id: 1, geometry: [800,600]})
       @desktops.push({id: 2, geometry: [1200,1000]})
@@ -78,7 +78,7 @@ describe Lazy::WMCtrl do
 
   def windows(sorted = false)
     unless @windows
-    klass = Lazy::Structures::Window
+    klass = Windows::Structures::Window
     @windows = []
     @windows.push({id: 1, title: 'bash', desktop: 1, geometry: [1,0,0,100,200]})
     @windows.push({id: 3, title: 'torr', desktop: 2, geometry: [2,100,100,400,800]})

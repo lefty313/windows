@@ -1,5 +1,5 @@
 require 'spec_helper'
-require 'lazy/core_ext/numeric'
+require 'windows/core_ext/numeric'
 
 describe Numeric do
   context "#percent" do

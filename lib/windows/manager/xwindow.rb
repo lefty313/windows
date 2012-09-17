@@ -1,4 +1,4 @@
-module Lazy
+module Windows
   module Manager
     class XWindow
       attr_reader :engine, :command, :id, :title, :created_at
