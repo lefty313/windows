@@ -1,6 +1,5 @@
-require 'windows/structures/window'
-require 'windows/structures/desktop'
-require 'windows/structures/collection'
+# load all files from structures dir
+Dir[File.dirname(__FILE__) + '/structures/*.rb'].each {|file| require file }
 
 module Windows
   module Structures

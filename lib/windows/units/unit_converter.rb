@@ -1,17 +1,13 @@
 require 'windows/units/converter'
 require 'windows/units/recognizer'
+require 'windows/structures'
 
 module Windows
   module Units
-    class Geometry < Struct.new(:x, :y, :w, :h)
-      def inspect
-        [g, x, y, w, h]
-      end
-    end
-
     class UnitConverter
       include Units::Converter
       include Units::Recognizer
+      include Structures
 
       def initialize(desktop, *args)
         @width    = desktop.width
