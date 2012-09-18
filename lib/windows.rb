@@ -1,5 +1,5 @@
 require "windows/version"
-require "windows/engines/xwindow"
+require "windows/manager"
 
 module Windows
   # Your code goes here...

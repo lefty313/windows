@@ -1,4 +1,5 @@
 require 'forwardable'
+require 'windows/engines/wmctrl'
 
 module Windows
   module Engines
