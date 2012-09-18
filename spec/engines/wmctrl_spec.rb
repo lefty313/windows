@@ -9,7 +9,6 @@ describe Windows::Engines::WMCtrl do
 
   it "#desktops" do
     list = subject.desktops
-
     desktops.zip(list).each do |desktop, desktop_window|
       desktop[:id].should       == desktop_window.id         
       desktop[:geometry].should == desktop_window.geometry         
@@ -44,7 +43,7 @@ describe Windows::Engines::WMCtrl do
     end
 
     it 'return sorted by :id' do
-      expected_ids = windows.sort_by {|w| w[:id]}.map {|w| w[:id]}
+      expected_ids = windows(:sorted).map {|w| w[:id]}
 
       subject.windows.ids.should == expected_ids
     end

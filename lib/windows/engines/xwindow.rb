@@ -1,9 +1,15 @@
+require 'forwardable'
+
 module Windows
   module Engines
     class XWindow
-      attr_reader :engine, :command, :id, :title, :created_at
+      extend Forwardable
 
-      def initialize(engine = nil, command)
+      def_delegators :window, :title, :x, :y, :width, :height, :desktop
+
+      attr_reader :engine, :command, :id, :created_at
+
+      def initialize(command, engine = nil)
         @engine  = engine || WMCtrl.new
         @command = command
       end
@@ -36,14 +42,17 @@ module Windows
           Process.detach(pid)
         end
         @id         = window.id
-        @title      = window.title
         @created_at = Time.now
         self
       end
 
+      def window
+        engine.find_window(@id)
+      end
+
       private
 
-      def log(status)
+        def log(status)
         # puts "[#{status} window] id: #{id} time: #{Time.now.strftime("%H:%M:%S")}"
       end
 
