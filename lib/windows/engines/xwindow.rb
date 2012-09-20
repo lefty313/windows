@@ -1,5 +1,6 @@
 require 'forwardable'
 require 'windows/engines/wmctrl'
+require 'windows/units/unit_converter'
 
 module Windows
   module Engines
@@ -15,20 +16,19 @@ module Windows
         @command = command
       end
 
-      def move(args)
+      def move(*args)
+        args = convert_units(args)
+
         undock
-        engine.action(id, :move_resize, *args)
-        # log("move")
+        engine.action(id, :move_resize, 0, *args)
       end
 
       def close
         engine.action(id, :close)
-        log("close")
       end
 
       def focus
         engine.action(id, :activate)
-        log("focus")
       end
 
       def undock
@@ -53,8 +53,9 @@ module Windows
 
       private
 
-        def log(status)
-        # puts "[#{status} window] id: #{id} time: #{Time.now.strftime("%H:%M:%S")}"
+      def convert_units(args)
+        converter = Units::UnitConverter.new(desktop, *args)
+        converter.convert
       end
 
     end

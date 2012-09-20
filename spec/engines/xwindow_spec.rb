@@ -14,6 +14,7 @@ class DummyEngine
   end
 end
 class DummyWindow < Struct.new(:id, :title);end
+class DummyDesktop < Struct.new(:width, :height);end
 
 describe Windows::Engines::XWindow do
   subject { Windows::Engines::XWindow.new(command, engine)}
@@ -36,11 +37,12 @@ describe Windows::Engines::XWindow do
   it { should delegate(:height).to(:window) }
 
   it '#move' do
-    args = [0, 100, 200, 500, 400]
+    args = [100, 200, 500, 400]
+    create_desktop
 
     subject.should_receive(:undock).ordered
-    engine.should_receive(:action).with(id, :move_resize, *args).ordered
-    subject.move(args)
+    engine.should_receive(:action).with(id, :move_resize, 0, *args).ordered
+    subject.move(*args)
   end
 
   it '#close' do
@@ -92,4 +94,11 @@ describe Windows::Engines::XWindow do
       expect {subject.create}.to raise_error(message)
     end
   end
+
+  def create_desktop
+    obj = DummyDesktop.new(800,600)
+    subject.stub(:desktop).and_return(obj)
+    obj
+  end
+
 end

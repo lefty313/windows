@@ -1,7 +1,7 @@
 require 'spec_helper'
 require 'windows/engines/wmctrl'
 
-describe Windows::Engines::WMCtrl do
+describe WMCtrl do
   before :each do
     create_windows
     create_desktops
@@ -33,10 +33,10 @@ describe Windows::Engines::WMCtrl do
         stub[:id].should          == window.id
         stub[:title].should       == window.title
         stub[:desktop].should     == desktop.id
-        stub[:geometry][1].should == window.x
-        stub[:geometry][2].should == window.y
-        stub[:geometry][3].should == window.width
-        stub[:geometry][4].should == window.height
+        stub[:geometry][0].should == window.x
+        stub[:geometry][1].should == window.y
+        stub[:geometry][2].should == window.width
+        stub[:geometry][3].should == window.height
       end
 
       list.should be_instance_of(Windows::Structures::Collection)
@@ -79,9 +79,9 @@ describe Windows::Engines::WMCtrl do
     unless @windows
     klass = Windows::Structures::Window
     @windows = []
-    @windows.push({id: 1, title: 'bash', desktop: 1, geometry: [1,0,0,100,200]})
-    @windows.push({id: 3, title: 'torr', desktop: 2, geometry: [2,100,100,400,800]})
-    @windows.push({id: 2, title: 'list', desktop: 1, geometry: [1,50,50,200,400]})
+    @windows.push({id: 1, title: 'bash', desktop: 1, geometry: [0,0,100,200]})
+    @windows.push({id: 3, title: 'torr', desktop: 2, geometry: [100,100,400,800]})
+    @windows.push({id: 2, title: 'list', desktop: 1, geometry: [50,50,200,400]})
     end
     sorted ? @windows.sort_by{|w| w[:id]} : @windows 
   end
