@@ -1,5 +1,5 @@
 require "windows/version"
-require "windows/manager"
+require "windows/window"
 
 module Windows
   # Your code goes here...

@@ -2,12 +2,12 @@ $:.unshift(File.expand_path(File.join(File.dirname(__FILE__), "../lib/")))
 require 'pry'
 require 'windows'
 
-class Window < Struct.new(:command)
-  include Windows::Manager
-end
+# class Window < Struct.new(:command)
+#   include Windows::Manager
+# end
 
-terminal = Window.new('gnome-terminal')
-editor   = Window.new('subl ../')
+terminal = Windows::Window.new('gnome-terminal')
+editor   = Windows::Window.new('subl ../')
 
 windows = []
 windows << terminal
