@@ -17,13 +17,14 @@ class DummyWindow < Struct.new(:id, :title);end
 class DummyDesktop < Struct.new(:width, :height);end
 
 describe Windows::Engines::XWindow do
-  subject { Windows::Engines::XWindow.new(command, engine)}
+  subject { Windows::Engines::XWindow.new(command, options, engine)}
   let(:engine)  { DummyEngine.new }
   let(:window)  { DummyWindow.new(100, 'chromium') }
   let(:command) { 'ls' }
   let(:id)      { window.id }
   let(:pid)     { 1010 }
   let(:time)    { Time.parse("Sep 13 2011")}
+  let(:options) { Hash.new }
 
   before :each do
     subject.instance_variable_set(:@id,id)
@@ -35,6 +36,7 @@ describe Windows::Engines::XWindow do
   it { should delegate(:y).to(:window) }
   it { should delegate(:width).to(:window) }
   it { should delegate(:height).to(:window) }
+  its(:lazy_actions) { should be_instance_of Windows::Structures::LazyActions }
 
   it '#move' do
     args = [100, 200, 500, 400]
@@ -69,6 +71,7 @@ describe Windows::Engines::XWindow do
 
     Process.should_receive(:spawn).with(command, out: :close, err: :close).and_return(pid)
     Process.should_receive(:detach).with(pid)
+    subject.lazy_actions.should_receive(:run)
 
     subject.create.should == subject
     subject.id.should == window.id
@@ -81,7 +84,7 @@ describe Windows::Engines::XWindow do
  
   context "initialize" do
     it "should use WMCtrl as default engine" do
-      object = subject.class.new(command, nil)
+      object = subject.class.new(command, options, nil)
       object.engine.should be_instance_of(Windows::Engines::WMCtrl)
     end
   end

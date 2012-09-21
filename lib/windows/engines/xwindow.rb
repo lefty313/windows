@@ -1,6 +1,7 @@
 require 'forwardable'
 require 'windows/engines/wmctrl'
 require 'windows/units/unit_converter'
+require 'windows/structures/lazy_actions'
 
 module Windows
   module Engines
@@ -9,11 +10,12 @@ module Windows
 
       def_delegators :window, :title, :x, :y, :width, :height, :desktop
 
-      attr_reader :engine, :command, :id, :created_at
+      attr_reader :engine, :command, :id, :created_at, :lazy_actions
 
-      def initialize(command, engine = nil)
+      def initialize(command, options = {}, engine = nil)
         @engine  = engine || WMCtrl.new
         @command = command
+        @lazy_actions = Structures::LazyActions.new(self, options)
       end
 
       def move(*args)
@@ -44,6 +46,7 @@ module Windows
         end
         @id         = window.id
         @created_at = Time.now
+        lazy_actions.run
         self
       end
 
