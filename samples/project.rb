@@ -8,16 +8,15 @@ p.browser = 'chromium-browser'
 
 begin
   p.open_editor do |editor|
-    editor.move 0,0,'50%','100%'
+    editor.move :left
   end
 
   p.open_browser do |browser|
-    browser.move '50%',0,'50%','100%'
+    browser.move :right
   end
   
-  p.open_window 'gnome-terminal' do |terminal|
+  p.open_window 'gnome-terminal', move: 'bottom_right' do |terminal|
     terminal.on_top
-    terminal.not_on_top
   end
 
   p.create

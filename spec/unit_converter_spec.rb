@@ -27,6 +27,21 @@ describe Windows::Units::UnitConverter do
   let(:desktop) { Struct.new(:width, :height).new(800,600) }
   subject       { Windows::Units::UnitConverter.new(desktop, *args) }
 
+  it 'NAMED_GEOMETRY' do
+    expected_values = {
+        left:         [0,  0,  '50%',  '100%'],
+        right:        ['50%', 0,  '50%',  '100%'],
+        bottom:       [0,  '50%', '100%', '50%'],
+        top:          [0,  0,  '100%', '50%'], 
+        max:          [0,  0,  '100%', '100%'],
+        bottom_right: ['50%', '50%', '50%', '50%'],
+        bottom_left:  [0, '50%', '50%', '50%'],
+        top_right:    ['50%', 0, '50%', '50%'],
+        top_left:     [0, 0, '50%', '50%']
+      }
+    Windows::Units::UnitConverter::NAMED_GEOMETRY.should == expected_values
+  end
+
   describe "#convert" do
     context "pixels" do
       let(:args) { [0, 0, 50, 100] }
@@ -49,6 +64,18 @@ describe Windows::Units::UnitConverter do
         subject.convert.should == [400, 0, 800, 25]
       end
     end  
+
+    context "named units" do
+      let(:args) { 'left' }
+      it 'left' do
+        subject.convert.should == [0, 0, 400, 600]
+      end
+
+      it 'wrong name' do
+        expect{ subject.class.new(desktop, 'wrong_name') }.to raise_error /Geometry with name wrong_name not exist. You can use/
+      end
+    end
+
   end
 end
 
