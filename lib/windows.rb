@@ -1,5 +1,5 @@
 require "windows/version"
-require "windows/window"
+require "windows/project"
 
 module Windows
   # Your code goes here...

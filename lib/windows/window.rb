@@ -6,8 +6,9 @@ module Windows
 
     attr_reader :command
 
-    def initialize(command)
+    def initialize(command, opts = {})
       @command = command
+      @opts    = {}
     end
   end
 end
