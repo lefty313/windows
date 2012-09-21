@@ -19,10 +19,11 @@ module Windows
       end
 
       def move(*args)
-        args = convert_units(args)
-
-        undock
-        engine.action(id, :move_resize, 0, *args)
+        lazy_evaluate(:move, args) do
+          args = convert_units(args)
+          undock
+          engine.action(id, :move_resize, 0, *args)
+        end
       end
 
       def close
@@ -30,11 +31,15 @@ module Windows
       end
 
       def focus
-        engine.action(id, :activate)
+        lazy_evaluate(:focus, true) do
+          engine.action(id, :activate)
+        end
       end
 
       def undock
-        engine.action(id, :change_state, "remove", "maximized_vert", "maximized_horz")
+        lazy_evaluate(:undock, true) do
+          engine.action(id, :change_state, "remove", "maximized_vert", "maximized_horz")
+        end
       end
 
       def create
@@ -59,6 +64,14 @@ module Windows
       def convert_units(args)
         converter = Units::UnitConverter.new(desktop, *args)
         converter.convert
+      end
+
+      def lazy_evaluate(method, args, &block)
+        if id
+          block.call
+        else
+          lazy_actions.add method, args
+        end
       end
 
     end

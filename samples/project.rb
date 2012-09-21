@@ -7,11 +7,17 @@ p.editor  = 'subl ../'
 p.browser = 'chromium-browser'
 
 begin
-  p.open_editor
-  p.open_browser
-  p.open_window 'gnome-terminal'
-  p.create
+  p.open_editor do |editor|
+    editor.move 0,0,'50%','100%'
+  end
 
+  p.open_browser do |browser|
+    browser.move '50%',0,'50%','100%'
+  end
+  p.open_window 'gnome-terminal'
+
+
+  p.create
   sleep 5
 ensure
   p.close

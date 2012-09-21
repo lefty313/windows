@@ -15,4 +15,17 @@ describe Windows::Structures::LazyActions do
     subject.run
   end 
 
+  context '#add' do
+    let(:actions) { {} }
+
+    it 'should append action' do
+      subject.add :focus, true
+      subject.actions_to_run.should == [ [:focus, true] ]
+    end
+
+    it 'should raise error when passing wrong action' do
+      expect{ subject.add :bar, true }.to raise_error /wrong action name. You can only use/
+    end
+  end
+
 end

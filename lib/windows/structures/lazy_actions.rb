@@ -9,6 +9,13 @@ module Windows
         @engine          = engine
       end
 
+      def add(action, args)
+        unless @allowed_actions.include?(action)
+          raise "wrong action name. You can only use #{@allowed_actions}"
+        end
+        @actions_to_run.push [action, args]
+      end
+
       def run
         @actions_to_run.each do |method, args|
           @engine.instance_eval do
@@ -19,6 +26,7 @@ module Windows
             end
           end
         end
+        @action_to_run = []
       end
       
     end

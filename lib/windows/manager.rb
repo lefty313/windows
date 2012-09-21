@@ -13,7 +13,15 @@ module Windows
    
 
     def manager
-      @manager ||= Engines::XWindow.new(command)
+      @manager ||= Engines::XWindow.new(command, options)
+    end
+
+    def options
+      raise "you should implement this"
+    end
+
+    def command
+      raise "you should implement this"
     end
   end
 end

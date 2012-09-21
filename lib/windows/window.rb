@@ -4,11 +4,11 @@ module Windows
   class Window
     include Manager
 
-    attr_reader :command
+    attr_reader :command, :options
 
-    def initialize(command, opts = {})
+    def initialize(command, options = {})
       @command = command
-      @opts    = {}
+      @options = options
     end
   end
 end

@@ -2,8 +2,8 @@ $:.unshift(File.expand_path(File.join(File.dirname(__FILE__), "../lib/")))
 require 'pry'
 require 'windows'
 
-terminal = Windows::Window.new('gnome-terminal')
-editor   = Windows::Window.new('subl ../')
+terminal = Windows::Window.new('gnome-terminal', move: ['50%','50%', '50%','50%'])
+editor   = Windows::Window.new('subl ../', move: [0,0, '100%', '100%'])
 
 windows = []
 windows << terminal
@@ -11,8 +11,8 @@ windows << editor
 
 begin
   windows.each(&:create)
-  editor.move(0,0, '100%', '100%')
-  terminal.move('50%','50%', '50%','50%')
+  # editor.move(0,0, '100%', '100%')
+  # terminal.move('50%','50%', '50%','50%')
   sleep 5
 ensure
   windows.each(&:close)

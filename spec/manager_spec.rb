@@ -3,6 +3,10 @@ require 'windows/manager'
 
 class DummyObject
   include Windows::Manager
+
+  def options
+    Hash.new
+  end
 end
 
 describe Windows::Manager do
