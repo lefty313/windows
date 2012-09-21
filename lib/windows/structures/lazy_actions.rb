@@ -4,7 +4,7 @@ module Windows
       attr_reader :allowed_actions, :actions_to_run
 
       def initialize(engine, actions_to_run)
-        @allowed_actions = [:move, :undock, :focus]
+        @allowed_actions = [:move, :undock, :focus, :on_top, :not_on_top]
         @actions_to_run  = actions_to_run.find_all {|k, v| @allowed_actions.include?(k) }
         @engine          = engine
       end

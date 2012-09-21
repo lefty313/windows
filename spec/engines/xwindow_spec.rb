@@ -81,6 +81,16 @@ describe Windows::Engines::XWindow do
     engine.should_receive(:find_window).with(window.id)
     subject.window
   end
+
+  it '#on_top' do
+    engine.should_receive(:action).with(id, :change_state, "add", "above")
+    subject.on_top
+  end
+
+  it '#not_on_top' do
+    engine.should_receive(:action).with(id, :change_state, "remove", "above")
+    subject.not_on_top
+  end
  
   context "initialize" do
     it "should use WMCtrl as default engine" do

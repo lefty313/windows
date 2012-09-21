@@ -59,6 +59,18 @@ module Windows
         engine.find_window(@id)
       end
 
+      def on_top
+        lazy_evaluate(:on_top, true) do
+          engine.action(id, :change_state, "add", "above")
+        end
+      end
+
+      def not_on_top
+        lazy_evaluate(:not_on_top, true) do
+          engine.action(id, :change_state, "remove", "above")
+        end
+      end
+
       private
 
       def convert_units(args)

@@ -6,7 +6,7 @@ describe Windows::Structures::LazyActions do
   let(:engine)  { Object.new }
   let(:actions) { {move: [0,0,0,0], bar: 'foo', undock: true } }
 
-  its(:allowed_actions) { should == [:move, :undock, :focus]}
+  its(:allowed_actions) { should == [:move, :undock, :focus, :on_top, :not_on_top]}
   its(:actions_to_run)   { should == [ [:move, [0,0,0,0]], [:undock, true] ] }
 
   it '#run' do

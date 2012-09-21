@@ -8,7 +8,9 @@ module Windows
       # window data delegators
       base.def_delegators :manager, :id, :title, :x, :y, :width, :height, :desktop
       # window actions
-      base.def_delegators :manager, :move, :close, :focus, :undock, :create, :window
+      base.def_delegators :manager, :move, :close, :focus,
+                          :undock, :create, :window, :on_top,
+                          :not_on_top
     end
    
 

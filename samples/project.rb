@@ -14,8 +14,11 @@ begin
   p.open_browser do |browser|
     browser.move '50%',0,'50%','100%'
   end
-  p.open_window 'gnome-terminal'
-
+  
+  p.open_window 'gnome-terminal' do |terminal|
+    terminal.on_top
+    terminal.not_on_top
+  end
 
   p.create
   sleep 5

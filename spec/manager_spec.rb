@@ -15,7 +15,7 @@ describe Windows::Manager do
 
   it { should respond_to :manager }
   it { should respond_to :id, :title, :desktop, :x, :y, :width, :height }
-  it { should respond_to :move, :close, :focus, :undock, :create, :window }
+  it { should respond_to :move, :close, :focus, :undock, :create, :window, :on_top, :not_on_top}
 
   it '#manager' do
     subject.stub(:command).and_return('gnome-terminal')
