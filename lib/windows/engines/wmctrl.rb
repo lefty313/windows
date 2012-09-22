@@ -24,7 +24,7 @@ class WMCtrl
   end
 
   def desktops
-    list = list_desktops().map {|d| Desktop.new(d[:id], d[:geometry]) }
+    list = list_desktops.map {|d| Desktop.new(d[:id], d[:workarea]) }
     Collection.new(list)
   end
 
@@ -49,6 +49,6 @@ class WMCtrl
   private    
 
   def pause
-    sleep 0.01
+    sleep 0.05
   end
 end

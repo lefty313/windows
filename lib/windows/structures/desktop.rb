@@ -2,11 +2,11 @@ module Windows
   module Structures
     class Desktop < Struct.new(:id, :geometry)
       def width
-        geometry[0]
+        geometry[2]
       end
 
       def height
-        geometry[1]
+        geometry[3]
       end
     end
   end

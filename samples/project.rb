@@ -1,5 +1,4 @@
 $:.unshift(File.expand_path(File.join(File.dirname(__FILE__), "../lib/")))
-require 'pry'
 require 'windows'
 
 p = Windows::Project.new(:default,'~')
@@ -15,7 +14,7 @@ begin
     browser.move :right
   end
   
-  p.open_window 'gnome-terminal', move: 'bottom_right' do |terminal|
+  p.open_window 'gnome-terminal', move: ['50%','50%','50%','50%'] do |terminal|
     terminal.on_top
   end
 

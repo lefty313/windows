@@ -10,8 +10,8 @@ describe WMCtrl do
   it "#desktops" do
     list = subject.desktops
     desktops.zip(list).each do |desktop, desktop_window|
-      desktop[:id].should       == desktop_window.id         
-      desktop[:geometry].should == desktop_window.geometry         
+      desktop[:id].should       == desktop_window.id   
+      desktop[:workarea].should == desktop_window.geometry         
     end
 
     list.should be_instance_of(Windows::Structures::Collection)
@@ -69,8 +69,8 @@ describe WMCtrl do
     unless @desktops
       klass = Windows::Structures::Desktop
       @desktops = []
-      @desktops.push({id: 1, geometry: [800,600]})
-      @desktops.push({id: 2, geometry: [1200,1000]})
+      @desktops.push({id: 1, workarea: [0, 0, 800, 600]})
+      @desktops.push({id: 2, workarea: [0, 0, 1200, 1000]})
     end
     @desktops
   end

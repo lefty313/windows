@@ -12,7 +12,6 @@ module Windows
                           :undock, :create, :window, :on_top,
                           :not_on_top
     end
-   
 
     def manager
       @manager ||= Engines::XWindow.new(command, options)

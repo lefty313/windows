@@ -1,3 +1,5 @@
+require 'delegate'
+
 module Windows
   module Structures
     class Collection < SimpleDelegator
