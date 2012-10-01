@@ -25,6 +25,8 @@ module Windows
         @width    = desktop.width
         @height   = desktop.height
         @geometry = create_geometry(args)
+        @x_offset = desktop.x_offset
+        @y_offset = desktop.y_offset
         @x_axis   = [@geometry.x, @geometry.w]
         @y_axis   = [@geometry.y, @geometry.h]
       end
@@ -39,6 +41,9 @@ module Windows
           item = recognize_unit(el)
           converter(item.unit).to(item.format, base: @height)
         end
+
+        x = x + @x_offset
+        y = y + @y_offset
 
         [x, y, w, h]
       end

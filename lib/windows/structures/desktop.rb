@@ -8,6 +8,14 @@ module Windows
       def height
         geometry[3]
       end
+
+      def x_offset
+        geometry[0]
+      end
+
+      def y_offset
+        geometry[1]
+      end
     end
   end
 end

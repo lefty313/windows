@@ -1,8 +1,8 @@
-$:.unshift(File.expand_path(File.join(File.dirname(__FILE__), "../lib/")))
+$LOAD_PATH.unshift lib = File.expand_path(File.join(File.dirname(__FILE__),'../lib'))
 require 'windows'
 
-p = Windows::Project.new(:default,'~')
-p.editor  = 'subl ../'
+p = Windows::Project.new(:default,lib)
+p.editor  = "sublime-text #{p.root.expand_path}/"
 p.browser = 'chromium-browser'
 
 begin
@@ -14,8 +14,8 @@ begin
     browser.move :right
   end
   
-  p.open_window 'gnome-terminal', move: ['50%','50%','50%','50%'] do |terminal|
-    terminal.on_top
+  p.open_window 'gnome-terminal', move: :bottom do |terminal|
+    # terminal.on_top
   end
 
   p.create

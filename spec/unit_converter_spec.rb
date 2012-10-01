@@ -24,7 +24,8 @@ describe Windows::Units::Converter::Finder do
 end
 
 describe Windows::Units::UnitConverter do
-  let(:desktop) { Struct.new(:width, :height).new(800,600) }
+  let(:desktop_geometry) { [0, 0, 800, 600] }
+  let(:desktop) { Struct.new(:x_offset, :y_offset, :width, :height).new(*desktop_geometry) }
   subject       { Windows::Units::UnitConverter.new(desktop, *args) }
 
   it 'NAMED_GEOMETRY' do
@@ -45,35 +46,33 @@ describe Windows::Units::UnitConverter do
   describe "#convert" do
     context "pixels" do
       let(:args) { [0, 0, 50, 100] }
-
-      it 'should work' do
-        subject.convert.should == [0, 0, 50, 100]
-      end
+      its(:convert) { should == [0, 0, 50, 100] }
     end
 
     context "percents" do
       let(:args) { ['0%','0%','50%','100%'] }
-      it 'should work' do
-        subject.convert.should == [0, 0 , 400, 600]
-      end
+      its(:convert) { should == [0, 0 , 400, 600] }
     end
 
     context "mixed units" do
       let(:args) { ['50%', 0, '100%', 25] }
-      it 'should work' do
-        subject.convert.should == [400, 0, 800, 25]
-      end
+      its(:convert) { should == [400, 0, 800, 25] }
     end  
 
     context "named units" do
       let(:args) { 'left' }
-      it 'left' do
-        subject.convert.should == [0, 0, 400, 600]
-      end
+      its(:convert) { should == [0, 0, 400, 600] }
 
       it 'wrong name' do
         expect{ subject.class.new(desktop, 'wrong_name') }.to raise_error /Geometry with name wrong_name not exist. You can use/
       end
+    end
+
+    context "with offset" do
+      let(:desktop_geometry) { [10,20, 800, 600] }
+      let(:args) { 'right' }
+
+      its(:convert) { should == [410, 20, 400, 600] }
     end
 
   end

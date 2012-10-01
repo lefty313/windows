@@ -14,7 +14,7 @@ class DummyEngine
   end
 end
 class DummyWindow < Struct.new(:id, :title);end
-class DummyDesktop < Struct.new(:width, :height);end
+class DummyDesktop < Struct.new(:x_offset, :y_offset, :width, :height);end
 
 describe Windows::Engines::XWindow do
   subject { Windows::Engines::XWindow.new(command, options, engine)}
@@ -109,7 +109,7 @@ describe Windows::Engines::XWindow do
   end
 
   def create_desktop
-    obj = DummyDesktop.new(800,600)
+    obj = DummyDesktop.new(0, 0, 800,600)
     subject.stub(:desktop).and_return(obj)
     obj
   end
