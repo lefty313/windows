@@ -11,7 +11,7 @@ module Windows
       base.def_delegators :manager, :move, :close, :focus,
                           :undock, :create, :window, :on_top,
                           :not_on_top
-    end
+    end 
 
     def manager
       @manager ||= Engines::XWindow.new(command, options)
@@ -20,7 +20,7 @@ module Windows
     def options
       raise "you should implement this"
     end
-
+ 
     def command
       raise "you should implement this"
     end
