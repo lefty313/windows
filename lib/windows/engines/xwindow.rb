@@ -12,6 +12,10 @@ module Windows
 
       attr_reader :engine, :command, :id, :created_at, :lazy_actions
 
+      def self.window_methods
+        public_instance_methods(false)
+      end
+
       def initialize(command, options = {}, engine = nil)
         @engine  = engine || WMCtrl.new
         @command = command
