@@ -43,7 +43,7 @@ module Windows
       end
 
       def window
-        engine.find_window(@id)
+        engine.current_window
       end
 
       def on_top

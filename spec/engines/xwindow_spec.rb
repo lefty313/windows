@@ -1,6 +1,8 @@
 require 'spec_helper'
 require 'time'
 require 'windows/engines/xwindow'
+require 'windows/structures/window'
+require 'windows/structures/desktop'
 
 module Windows
   module Engines
@@ -10,10 +12,18 @@ module Windows
 end
 
 class DummyEngine
-  def find_window(id)
+  def current_window
+    fake_window
   end
 
-  def create_window(command)
+  private
+
+  def fake_window
+    Windows::Structures::Window.new(1234, 'fake window', fake_desktop)
+  end
+
+  def fake_desktop
+    Windows::Structures::Desktop.new(9876, [0,0,800,600])
   end
 end
 class DummyWindow < Struct.new(:id, :title);end
@@ -22,10 +32,7 @@ class DummyDesktop < Struct.new(:x_offset, :y_offset, :width, :height);end
 describe Windows::Engines::XWindow do
   subject { Windows::Engines::XWindow.new(command, options, engine)}
   let(:engine)  { DummyEngine.new }
-  let(:window)  { DummyWindow.new(100, 'chromium') }
   let(:command) { 'ls' }
-  let(:id)      { window.id }
-  let(:pid)     { 1010 }
   let(:time)    { Time.parse("Sep 13 2011")}
   let(:options) { Hash.new }
 
@@ -69,7 +76,7 @@ describe Windows::Engines::XWindow do
   end
 
   it '#window' do
-    engine.should_receive(:find_window).with(window.id)
+    engine.should_receive(:current_window)
     subject.window
   end
 
@@ -89,15 +96,4 @@ describe Windows::Engines::XWindow do
       object.engine.should be_instance_of(Windows::Engines::WMCtrl)
     end
   end
-
-  def create_desktop
-    obj = DummyDesktop.new(0, 0, 800,600)
-    subject.stub(:desktop).and_return(obj)
-    obj
-  end
-
-  def stub_window_id(id)
-    subject.instance_variable_set(:@id,id)
-  end
-
 end
