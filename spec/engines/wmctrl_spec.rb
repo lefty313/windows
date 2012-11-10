@@ -1,20 +1,43 @@
 require 'spec_helper'
 require 'windows/engines/wmctrl'
+require 'time'
 
 describe WMCtrl do
   let(:fake_window_id) { 1234 }
+  let(:window)         { Windows::Structures::Window.new(fake_window_id) }
+  let(:time)           { Time.parse("Sep 13 2011") }
+  let(:command)        { 'any_command' }
 
   before :each do
     create_windows
     create_desktops
   end
 
-  it '#create_window' do
-    window = Struct.new(:id).new(1500)
-    subject.stub(:register_window).and_return(window)
+  context "#create_window" do
+    before(:each) do
+      subject.stub(:register_window).and_return(window)
+      Time.stub!(:now).and_return(time)
+    end
 
-    created_window = subject.create_window('any_command')
-    created_window.id == window.id
+    it 'should return window' do
+      created_window = subject.create_window(command)
+      created_window.should == window
+    end
+
+    it 'should assign id' do
+      subject.create_window(command)
+      subject.id.should == window.id 
+    end
+
+    it 'should assign created_at' do
+      subject.create_window(command)
+      subject.created_at.should == time
+    end
+
+    it 'should raise exception when window is already created' do
+      subject.create_window(command)
+      expect { subject.create_window(command) }.to raise_error "already created at #{time}"
+    end
   end
 
   it "#desktops" do

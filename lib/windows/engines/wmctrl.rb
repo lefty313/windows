@@ -4,7 +4,7 @@ require 'windows/structures'
 class WMCtrl
   include Windows::Structures
 
-  attr_reader :id
+  attr_reader :id, :created_at
   
   def action(*args)
     raise "you must create window before using" unless id
@@ -14,10 +14,16 @@ class WMCtrl
   end
 
   def create_window(command)
-    register_window do
+    raise "already created at #{created_at}" if created_at
+
+    window = register_window do
       pid = Process.spawn(command, :out => :close, :err => :close)
       Process.detach(pid)
     end
+
+    @id         = window.id
+    @created_at = Time.now
+    window
   end
 
   def register_window(&block)
