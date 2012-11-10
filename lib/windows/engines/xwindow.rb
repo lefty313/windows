@@ -1,7 +1,6 @@
 require 'forwardable'
 require 'windows/engines/wmctrl'
 require 'windows/units/unit_converter'
-require 'windows/structures/lazy_actions'
 
 module Windows
   module Engines
@@ -10,7 +9,7 @@ module Windows
 
       def_delegators :window, :title, :x, :y, :width, :height, :desktop
 
-      attr_reader :engine, :command, :id, :created_at, :lazy_actions
+      attr_reader :engine, :command, :id, :created_at
 
       def self.window_methods
         public_instance_methods(false)
@@ -19,15 +18,12 @@ module Windows
       def initialize(command, options = {}, engine = nil)
         @engine  = engine || WMCtrl.new
         @command = command
-        @lazy_actions = Structures::LazyActions.new(self, options)
       end
 
       def move(*args)
-        lazy_evaluate(:move, args) do
-          args = convert_units(args)
-          undock
-          engine.action(id, :move_resize, 0, *args)
-        end
+        args = convert_units(args)
+        undock
+        engine.action(id, :move_resize, 0, *args)
       end
 
       def close
@@ -35,15 +31,11 @@ module Windows
       end
 
       def focus
-        lazy_evaluate(:focus, true) do
-          engine.action(id, :activate)
-        end
+        engine.action(id, :activate)
       end
 
       def undock
-        lazy_evaluate(:undock, true) do
-          engine.action(id, :change_state, "remove", "maximized_vert", "maximized_horz")
-        end
+        engine.action(id, :change_state, "remove", "maximized_vert", "maximized_horz")
       end
 
       def create
@@ -51,7 +43,6 @@ module Windows
         window      = engine.create_window(command)
         @id         = window.id
         @created_at = Time.now
-        lazy_actions.run
         self
       end
 
@@ -60,15 +51,11 @@ module Windows
       end
 
       def on_top
-        lazy_evaluate(:on_top, true) do
-          engine.action(id, :change_state, "add", "above")
-        end
+        engine.action(id, :change_state, "add", "above")
       end
 
       def not_on_top
-        lazy_evaluate(:not_on_top, true) do
-          engine.action(id, :change_state, "remove", "above")
-        end
+        engine.action(id, :change_state, "remove", "above")
       end
 
       private
@@ -76,14 +63,6 @@ module Windows
       def convert_units(args)
         converter = Units::UnitConverter.new(desktop, *args)
         converter.convert
-      end
-
-      def lazy_evaluate(method, args, &block)
-        if id
-          block.call
-        else
-          lazy_actions.add method, args
-        end
       end
 
     end

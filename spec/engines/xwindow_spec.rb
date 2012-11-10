@@ -39,7 +39,6 @@ describe Windows::Engines::XWindow do
   it { should delegate(:y).to(:window) }
   it { should delegate(:width).to(:window) }
   it { should delegate(:height).to(:window) }
-  its(:lazy_actions) { should be_instance_of Windows::Structures::LazyActions }
 
   it '#move' do
     args = [100, 200, 500, 400]
