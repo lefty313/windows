@@ -3,9 +3,13 @@ require 'windows/structures'
 
 class WMCtrl
   include Windows::Structures
+
+  attr_reader :id
   
   def action(*args)
-    action_window(*args)
+    raise "you must create window before using" unless id
+
+    action_window(id, *args)
     pause
   end
 

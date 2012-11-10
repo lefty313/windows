@@ -2,6 +2,8 @@ require 'spec_helper'
 require 'windows/engines/wmctrl'
 
 describe WMCtrl do
+  let(:fake_window_id) { 1234 }
+
   before :each do
     create_windows
     create_desktops
@@ -63,12 +65,26 @@ describe WMCtrl do
     window.should be_instance_of Windows::Structures::Window
   end
 
-  it "#action" do
-    args = [0, :move_resize, 0, 100, 200, 500, 400]
+  context "#action" do
+    context "before window is actually created" do
+      it 'should raise exception' do
+        expect { subject.action }.to raise_exception('you must create window before using')
+      end
+    end
 
-    subject.should_receive(:action_window).with(*args)
-    subject.should_receive(:pause)
-    subject.action(*args)
+    context "when window is created" do
+      before do
+        subject.stub(:id).and_return(fake_window_id)
+      end
+
+      it 'should delegate to engine' do
+        args = [0, :move_resize, 0, 100, 200, 500, 400]
+
+        subject.should_receive(:action_window).with(fake_window_id, *args)
+        subject.should_receive(:pause)
+        subject.action(*args)
+      end
+    end
   end
 
   private
