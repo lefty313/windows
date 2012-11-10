@@ -39,11 +39,7 @@ module Windows
       end
 
       def create
-        raise "already created at #{created_at}" if created_at
-        window      = engine.create_window(command)
-        @id         = window.id
-        @created_at = Time.now
-        self
+        engine.create_window(command)
       end
 
       def window

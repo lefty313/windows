@@ -66,27 +66,9 @@ describe Windows::Engines::XWindow do
     subject.undock
   end
 
-  context "#create" do
-    before(:each) do
-      stub_time(time)
-      stub_window(window)
-      remove_window_id
-    end
-
-    it 'should assign id' do
-      subject.create
-      subject.id.should == window.id 
-    end
-
-    it 'should assign created_at' do
-      subject.create
-      subject.created_at.should == time
-    end
-
-    it 'should raise exception when window is already created' do
-      subject.create
-      expect { subject.create }.to raise_error "already created at #{time}"
-    end
+  it '#create' do
+    engine.should_receive(:create_window).with(command)
+    subject.create
   end
 
   it '#window' do
