@@ -88,6 +88,21 @@ describe WMCtrl do
     window.should be_instance_of Windows::Structures::Window
   end
 
+  context "#current_window" do
+    it 'should find window by id' do
+      subject.stub(:id).and_return(fake_window_id)
+      subject.should_receive(:find_window).with(fake_window_id)
+
+      subject.current_window 
+    end
+
+    it 'should raise exception if id not exist' do
+      subject.stub(:id).and_return(nil)
+
+      expect { subject.current_window }.to raise_exception('you must create window before using')
+    end
+  end
+
   context "#action" do
     context "before window is actually created" do
       it 'should raise exception' do
