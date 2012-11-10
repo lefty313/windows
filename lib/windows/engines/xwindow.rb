@@ -7,9 +7,9 @@ module Windows
     class XWindow
       extend Forwardable
 
-      def_delegators :window, :title, :x, :y, :width, :height, :desktop
+      def_delegators :window, :id, :created_at, :title, :x, :y, :width, :height, :desktop
 
-      attr_reader :engine, :command, :id, :created_at
+      attr_reader :engine, :command
 
       def self.window_methods
         public_instance_methods(false)
