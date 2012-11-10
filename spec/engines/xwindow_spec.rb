@@ -12,6 +12,9 @@ end
 class DummyEngine
   def find_window(id)
   end
+
+  def create_window(command)
+  end
 end
 class DummyWindow < Struct.new(:id, :title);end
 class DummyDesktop < Struct.new(:x_offset, :y_offset, :width, :height);end
@@ -27,7 +30,7 @@ describe Windows::Engines::XWindow do
   let(:options) { Hash.new }
 
   before :each do
-    subject.instance_variable_set(:@id,id)
+    stub_window_id(id)
   end
 
   it { should delegate(:title).to(:window) }
@@ -64,17 +67,27 @@ describe Windows::Engines::XWindow do
     subject.undock
   end
 
-  it "#create" do
-    Time.any_instance.stub(:now).and_return(time)
-    engine.stub(:register_window).and_return(window)
-    engine.should_receive(:register_window).and_yield
+  context "#create" do
+    before(:each) do
+      stub_time(time)
+      stub_window(window)
+      remove_window_id
+    end
 
-    Process.should_receive(:spawn).with(command, out: :close, err: :close).and_return(pid)
-    Process.should_receive(:detach).with(pid)
-    subject.lazy_actions.should_receive(:run)
+    it 'should assign id' do
+      subject.create
+      subject.id.should == window.id 
+    end
 
-    subject.create.should == subject
-    subject.id.should == window.id
+    it 'should assign created_at' do
+      subject.create
+      subject.created_at.should == time
+    end
+
+    it 'should raise exception when window is already created' do
+      subject.create
+      expect { subject.create }.to raise_error "already created at #{time}"
+    end
   end
 
   it '#window' do
@@ -112,6 +125,22 @@ describe Windows::Engines::XWindow do
     obj = DummyDesktop.new(0, 0, 800,600)
     subject.stub(:desktop).and_return(obj)
     obj
+  end
+
+  def stub_window(window)
+    engine.stub(:create_window).and_return(window)
+  end
+
+  def stub_window_id(id)
+    subject.instance_variable_set(:@id,id)
+  end
+
+  def stub_time(time)
+    Time.stub!(:now).and_return(time)
+  end
+
+  def remove_window_id
+    stub_window_id(nil)
   end
 
 end

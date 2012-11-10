@@ -48,11 +48,7 @@ module Windows
 
       def create
         raise "already created at #{created_at}" if created_at
-
-        window = engine.register_window do
-          pid = Process.spawn(command, :out => :close, :err => :close)
-          Process.detach(pid)
-        end
+        window      = engine.create_window(command)
         @id         = window.id
         @created_at = Time.now
         lazy_actions.run
