@@ -7,6 +7,14 @@ describe WMCtrl do
     create_desktops
   end
 
+  it '#create_window' do
+    window = Struct.new(:id).new(1500)
+    subject.stub(:register_window).and_return(window)
+
+    created_window = subject.create_window('any_command')
+    created_window.id == window.id
+  end
+
   it "#desktops" do
     list = subject.desktops
     desktops.zip(list).each do |desktop, desktop_window|

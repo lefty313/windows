@@ -9,6 +9,13 @@ class WMCtrl
     pause
   end
 
+  def create_window(command)
+    register_window do
+      pid = Process.spawn(command, :out => :close, :err => :close)
+      Process.detach(pid)
+    end
+  end
+
   def register_window(&block)
     before = windows
     block.call
