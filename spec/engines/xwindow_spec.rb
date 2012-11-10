@@ -93,35 +93,14 @@ describe Windows::Engines::XWindow do
     end
   end
 
-  context "exceptions" do
-    it '#create raise if already created' do
-      message = "already created at #{time}"
-
-      subject.stub(:created_at).and_return(time)
-      expect {subject.create}.to raise_error(message)
-    end
-  end
-
   def create_desktop
     obj = DummyDesktop.new(0, 0, 800,600)
     subject.stub(:desktop).and_return(obj)
     obj
   end
 
-  def stub_window(window)
-    engine.stub(:create_window).and_return(window)
-  end
-
   def stub_window_id(id)
     subject.instance_variable_set(:@id,id)
-  end
-
-  def stub_time(time)
-    Time.stub!(:now).and_return(time)
-  end
-
-  def remove_window_id
-    stub_window_id(nil)
   end
 
 end
