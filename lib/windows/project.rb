@@ -1,4 +1,3 @@
-require 'windows/window'
 require 'pathname'
 
 module Windows

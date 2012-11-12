@@ -1,6 +1,7 @@
 require "windows/version"
 require "windows/project"
+require "windows/engines/xwindow"
 
 module Windows
-  # Your code goes here...
+  Window = Engines::XWindow
 end
