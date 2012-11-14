@@ -3,8 +3,7 @@ require 'windows'
 
 module Windows
   class Project
-    attr_accessor :editor, :browser
-    attr_reader   :root, :name, :windows
+    attr_reader :root, :name, :windows
 
     def initialize(name, path)
       @windows = Array.new
