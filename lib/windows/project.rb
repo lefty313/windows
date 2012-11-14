@@ -12,18 +12,14 @@ module Windows
     end
 
     def close
-      @windows.each(&:close)
-    end
-
-    def create_window(klass, command, opts)
-      window = klass.new(command, opts)
-      yield window if block_given?
-      @windows.push window
-      window
+      windows.each(&:close)
     end
 
     def open_window(command, opts = {}, &block)
-      create_window(Window, command, opts, &block)
+      window = Windows::Window.new(command, opts).create
+      yield window if block_given?
+      windows.push(window)
+      window
     end
 
   end

@@ -21,51 +21,41 @@ describe Windows::Project do
   end
 
   it '#close' do
-    create_windows
-
-    subject.windows.each do |w|
-      w.should_receive(:close)
-    end
+    window1 = Object.new
+    window2 = Object.new
+    subject.stub(:windows).and_return([window1, window2])
+    window1.should_receive(:close)
+    window2.should_receive(:close)
     subject.close
   end
 
+  context '#open_window' do
+    before do
+      @window = stub_window
+    end
 
-  context "#create_window" do
-    it 'should return Windows::Window' do
-      value = subject.create_window(Windows::Window, command, args)
-      value.should be_instance_of Windows::Window
+    it 'should create window' do
+      @window.should_receive(:create)
+      subject.open_window(command, args)
     end
 
     it 'with block should yield window' do
-      window = double("Windows::Window")
-      window.should_receive(:new_tab)
-      Windows::Window.should_receive(:new).with(command, args).and_return(window)
+      @window.should_receive(:focus)
 
-      subject.create_window Windows::Window, command, args do |window|
-        window.new_tab 
+      subject.open_window(command, args) do |w|
+        w.focus
       end
     end
 
-    it 'should store created windows' do
-      windows = create_windows
-
-      subject.windows.should == windows
+    it 'should store created window' do
+      subject.open_window(command, args)
+      subject.windows.should include(@window)
     end
   end
 
-  context '#open_window' do
-    it 'should pass arguments to :create_window' do
-      subject.should_receive(:create_window).with(Windows::Window, command, args)
-      subject.open_window command, args
-    end
+  def stub_window
+    window = double("Window").as_null_object
+    Windows::Window.should_receive(:new).with(command, args).and_return(window)
+    window
   end
-
-  def create_windows
-    unless @stubbed_windows
-      window1 = subject.create_window Windows::Window, command , args
-      window2 = subject.create_window Windows::Window, command , args
-    end
-    @stubed_windows ||= [window1, window2]
-  end
-
 end
