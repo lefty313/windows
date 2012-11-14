@@ -7,7 +7,7 @@ module Windows
 
     def initialize(name, path)
       @windows = Array.new
-      @root    = Pathname.new(path)
+      @root    = Pathname.new(path).expand_path
       @name    = name
     end
 

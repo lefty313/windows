@@ -12,7 +12,7 @@ describe Windows::Project do
 
   context "options" do
     it 'return root as pathname' do
-      subject.root.should == Pathname.new(path)
+      subject.root.should == Pathname.new(path).expand_path
     end
 
     it 'return name' do
