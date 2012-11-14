@@ -20,15 +20,6 @@ describe Windows::Project do
     end
   end
 
-  it '#create' do
-    create_windows
-
-    subject.windows.each do |w|
-      w.should_receive(:create)
-    end
-    subject.create
-  end
-
   it '#close' do
     create_windows
 

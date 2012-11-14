@@ -1,4 +1,5 @@
 require 'pathname'
+require 'windows'
 
 module Windows
   class Project
@@ -9,10 +10,6 @@ module Windows
       @windows = Array.new
       @root    = Pathname.new(path)
       @name    = name
-    end
-
-    def create
-      @windows.each(&:create)
     end
 
     def close
