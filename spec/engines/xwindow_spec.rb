@@ -12,6 +12,12 @@ module Windows
 end
 
 class DummyEngine
+  def action(*args)
+  end
+
+  def create_window(command)
+  end
+
   def current_window
     fake_window
   end
@@ -44,6 +50,36 @@ describe Windows::Engines::XWindow do
   it { should delegate(:height).to(:window) }
   it { should delegate(:id).to(:window) }
   it { should delegate(:created_at).to(:window) }
+
+  context "return value" do
+    it '#create' do
+      subject.create.should == subject
+    end
+
+    it '#move' do
+      subject.move(:right).should == subject
+    end
+
+    it '#close' do
+      subject.close.should == subject
+    end
+
+    it '#focus' do
+      subject.focus.should == subject
+    end
+
+    it '#undock' do
+      subject.undock.should == subject
+    end
+
+    it '#on_top' do
+      subject.on_top.should == subject
+    end
+
+    it '#not_on_top' do
+      subject.not_on_top.should == subject
+    end
+  end
 
   it '#move' do
     args = [100, 200, 500, 400]
