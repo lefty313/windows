@@ -38,6 +38,12 @@ describe WMCtrl do
       subject.create_window(command)
       expect { subject.create_window(command) }.to raise_error "already created at #{time}"
     end
+
+    it 'should raise exception when command not exist' do
+      subject.rspec_reset
+      Process.stub(:spawn).and_raise(Errno::ENOENT)
+      expect { subject.create_window(command) }.to raise_error "Failed to create window with command: #{command}. Maybe a typo?"
+    end
   end
 
   it "#desktops" do
