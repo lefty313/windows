@@ -60,17 +60,6 @@ describe Windows::Project do
     end
   end
 
-  context '#open_browser' do
-    before :each do
-      subject.browser = browser
-    end
-
-    it 'should use #browser as command' do
-      subject.should_receive(:open_window).with(browser, args)
-      subject.open_browser args
-    end
-  end  
-
   def create_windows
     unless @stubbed_windows
       window1 = subject.create_window Windows::Window, command , args
