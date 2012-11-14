@@ -60,17 +60,6 @@ describe Windows::Project do
     end
   end
 
-  context '#open_editor' do
-    before :each do
-      subject.editor = editor
-    end
-
-    it 'should use #editor as command' do
-      subject.should_receive(:open_window).with(editor, args)
-      subject.open_editor args
-    end
-  end
-
   context '#open_browser' do
     before :each do
       subject.browser = browser

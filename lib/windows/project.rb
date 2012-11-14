@@ -27,10 +27,6 @@ module Windows
       create_window(Window, command, opts, &block)
     end
 
-    def open_editor(opts = {}, &block)
-      open_window(editor, opts, &block)
-    end
-
     def open_browser(opts = {}, &block)
       open_window(browser, opts, &block)
     end
