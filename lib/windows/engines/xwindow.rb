@@ -11,10 +11,6 @@ module Windows
 
       attr_reader :engine, :command
 
-      def self.window_methods
-        public_instance_methods(false)
-      end
-
       def initialize(command, options = {}, engine = nil)
         @engine  = engine || WMCtrl.new
         @command = command
