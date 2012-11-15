@@ -1,7 +1,7 @@
 windows
 ====
 
-Ruby framework for manipulating Xwindow manager windows
+Ruby framework for manipulating Xwindow windows
 
 ### Installation for unix system
 ```bash  
@@ -11,26 +11,16 @@ Ruby framework for manipulating Xwindow manager windows
   gem install windows
 ```
 
-### OOP Usage
+### Usage
 ```ruby
-  p = Windows::Project.new(:default,'~')
-  p.editor  = 'subl ../'
-  p.browser = 'chromium-browser'
+require 'windows'
 
-  # with block
-  p.open_editor do |editor|
-    editor.move :left
-  end
+p = Windows::Project.new(:default,'~')
 
-  # with block and default action
-  p.open_window 'gnome-terminal', move: 'bottom_right' do |terminal|
-    terminal.on_top
-  end
+p.open_window('chromium-browser').move(:left)
+p.open_window('sublime-text-2 .').move(:right)
+p.open_window('gnome-terminal').move(:bottom_right).on_top
 
-  # this method create windows associated with project
-  p.create
-  sleep 5
-  # this method close all windows associated with project
-  p.close
-
+sleep 5
+p.close
 ```  
