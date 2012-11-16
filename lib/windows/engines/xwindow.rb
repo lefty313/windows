@@ -25,6 +25,8 @@ module Windows
 
       def close
         action(:close)
+        @id = false
+        @created_at = false
         self
       end
 

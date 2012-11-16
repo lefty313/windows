@@ -94,9 +94,18 @@ describe Windows::Engines::XWindow do
     subject.move(*args)
   end
 
-  it '#close' do
-    engine.should_receive(:action).with(id, :close)
-    subject.close
+  context 'close' do
+    it 'should delegate to engine' do
+      engine.should_receive(:action).with(id, :close)
+      subject.close
+    end
+
+    it 'should :id, :created_at set to false' do
+      subject.create
+      subject.close
+      subject.id.should == false
+      subject.created_at.should == false
+    end
   end
 
   it '#focus' do
