@@ -19,22 +19,22 @@ module Windows
       def move(*args)
         args = convert_units(args)
         undock
-        engine.action(:move_resize, 0, *args)
+        action(:move_resize, 0, *args)
         self
       end
 
       def close
-        engine.action(:close)
+        action(:close)
         self
       end
 
       def focus
-        engine.action(:activate)
+        action(:activate)
         self
       end
 
       def undock
-        engine.action(:change_state, "remove", "maximized_vert", "maximized_horz")
+        action(:change_state, "remove", "maximized_vert", "maximized_horz")
         self
       end
 
@@ -53,13 +53,18 @@ module Windows
       end
 
       def on_top
-        engine.action(:change_state, "add", "above")
+        action(:change_state, "add", "above")
         self
       end
 
       def not_on_top
-        engine.action(:change_state, "remove", "above")
+        action(:change_state, "remove", "above")
         self
+      end
+
+      def action(*args)
+        create
+        engine.action(id, *args)
       end
 
       private
@@ -68,7 +73,6 @@ module Windows
         converter = Units::UnitConverter.new(desktop, *args)
         converter.convert
       end
-
     end
   end
 end

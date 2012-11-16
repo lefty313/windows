@@ -45,6 +45,8 @@ describe Windows::Engines::XWindow do
   let(:command) { 'ls' }
   let(:time)    { Time.parse("Sep 13 2011")}
   let(:options) { Hash.new }
+  let(:window)  { engine.fake_window }
+  let(:id)      { window.id }
 
   it { should delegate(:title).to(:window) }
   it { should delegate(:desktop).to(:window) }
@@ -91,24 +93,24 @@ describe Windows::Engines::XWindow do
     args = [100, 200, 500, 400]
 
     subject.should_receive(:undock).ordered
-    engine.should_receive(:action).with(:move_resize, 0, *args).ordered
+    engine.should_receive(:action).with(id, :move_resize, 0, *args).ordered
     subject.move(*args)
   end
 
   it '#close' do
-    engine.should_receive(:action).with(:close)
+    engine.should_receive(:action).with(id, :close)
     subject.close
   end
 
   it '#focus' do
-    engine.should_receive(:action).with(:activate)
+    engine.should_receive(:action).with(id, :activate)
     subject.focus  
   end
 
   it '#undock' do
     args = ["remove", "maximized_vert", "maximized_horz"]
 
-    engine.should_receive(:action).with(:change_state, *args)
+    engine.should_receive(:action).with(id, :change_state, *args)
     subject.undock
   end
 
@@ -127,25 +129,32 @@ describe Windows::Engines::XWindow do
       subject.created_at.should == time
     end
 
-    it 'should raise exception when window is already created' do
+    it 'should return false when window is already created' do
       subject.create
-      expect { subject.create }.to raise_error "already created at #{time}"
+      subject.create.should be_false
     end
   end
 
   it '#window' do
-    engine.should_receive(:current_window)
+    engine.should_receive(:find_window).with(id)
     subject.window
   end
 
   it '#on_top' do
-    engine.should_receive(:action).with(:change_state, "add", "above")
+    engine.should_receive(:action).with(id, :change_state, "add", "above")
     subject.on_top
   end
 
   it '#not_on_top' do
-    engine.should_receive(:action).with(:change_state, "remove", "above")
+    engine.should_receive(:action).with(id, :change_state, "remove", "above")
     subject.not_on_top
+  end
+
+  it '#action' do
+    args = [0, 0, 0, 100, 200]
+
+    engine.should_receive(:action).with(id, *args)
+    subject.action(*args)
   end
  
   context "initialize" do
