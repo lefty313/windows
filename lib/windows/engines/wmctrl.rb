@@ -3,13 +3,9 @@ require 'windows/structures'
 
 class WMCtrl
   include Windows::Structures
-
-  attr_reader :id, :created_at
   
   def action(*args)
-    raise "you must create window before using" unless id
-
-    action_window(id, *args)
+    action_window(*args)
     pause
   end
 
@@ -63,7 +59,7 @@ class WMCtrl
   rescue Errno::ENOENT
     raise "Failed to create window with command: #{command}. Maybe a typo?"
   end
-  
+
   private    
 
   def pause
