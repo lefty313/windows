@@ -9,11 +9,6 @@ class WMCtrl
     pause
   end
 
-  def current_window
-    raise "you must create window before using" unless id
-    find_window(id)
-  end
-
   def register_window(&block)
     before = windows
     block.call
