@@ -71,6 +71,10 @@ module Windows
         engine.action(id, *args)
       end
 
+      def maximize
+        action(:change_state, "add", "maximized_vert", "maximized_horz")
+      end
+
       private
 
       def convert_units(args)

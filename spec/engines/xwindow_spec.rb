@@ -163,6 +163,11 @@ describe Windows::Engines::XWindow do
     engine.should_receive(:action).with(id, *args)
     subject.action(*args)
   end
+
+  it '#maximize' do
+    engine.should_receive(:action).with(id, :change_state, "add", "maximized_vert", "maximized_horz")
+    subject.maximize
+  end
  
   context "initialize" do
     it "should use WMCtrl as default engine" do
