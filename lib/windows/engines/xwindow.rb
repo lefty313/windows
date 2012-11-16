@@ -39,7 +39,7 @@ module Windows
       end
 
       def create
-        raise "already created at #{created_at}" if created_at
+        return false if created_at
 
         window = engine.spawn_window(command)
 
@@ -49,7 +49,8 @@ module Windows
       end
 
       def window
-        engine.current_window
+        create
+        engine.find_window(id)
       end
 
       def on_top

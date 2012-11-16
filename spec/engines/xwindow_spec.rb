@@ -15,14 +15,11 @@ class DummyEngine
   def action(*args)
   end
 
-  def create
-  end
-
-  def current_window
+  def spawn_window(command)
     fake_window
   end
 
-  def spawn_window(command)
+  def find_window(id)
     fake_window
   end
 
