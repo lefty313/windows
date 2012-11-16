@@ -51,6 +51,7 @@ describe Windows::Engines::XWindow do
   it { should delegate(:y).to(:window) }
   it { should delegate(:width).to(:window) }
   it { should delegate(:height).to(:window) }
+  it { should respond_to :command= }
 
   context "return value" do
     it '#create' do

@@ -9,7 +9,8 @@ module Windows
 
       def_delegators :window, :title, :x, :y, :width, :height, :desktop
 
-      attr_reader :engine, :command, :created_at, :id
+      attr_reader :engine, :created_at, :id
+      attr_accessor :command
 
       def initialize(command, options = {}, engine = nil)
         @engine  = engine || WMCtrl.new
