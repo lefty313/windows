@@ -15,18 +15,22 @@ class DummyEngine
   def action(*args)
   end
 
-  def create_window(command)
+  def create
   end
 
   def current_window
     fake_window
   end
 
-  private
+  def spawn_window(command)
+    fake_window
+  end
 
   def fake_window
     Windows::Structures::Window.new(1234, 'fake window', fake_desktop)
   end
+
+  private
 
   def fake_desktop
     Windows::Structures::Desktop.new(9876, [0,0,800,600])
@@ -48,8 +52,6 @@ describe Windows::Engines::XWindow do
   it { should delegate(:y).to(:window) }
   it { should delegate(:width).to(:window) }
   it { should delegate(:height).to(:window) }
-  it { should delegate(:id).to(:window) }
-  it { should delegate(:created_at).to(:window) }
 
   context "return value" do
     it '#create' do
@@ -79,6 +81,10 @@ describe Windows::Engines::XWindow do
     it '#not_on_top' do
       subject.not_on_top.should == subject
     end
+
+    it '#create' do
+      subject.create.should == subject
+    end
   end
 
   it '#move' do
@@ -106,9 +112,25 @@ describe Windows::Engines::XWindow do
     subject.undock
   end
 
-  it '#create' do
-    engine.should_receive(:create_window).with(command)
-    subject.create
+  context "#create" do
+    before(:each) do
+      Time.stub!(:now).and_return(time)
+    end
+
+    it 'should assign id' do
+      subject.create
+      subject.id.should == engine.fake_window.id 
+    end
+
+    it 'should assign created_at' do
+      subject.create
+      subject.created_at.should == time
+    end
+
+    it 'should raise exception when window is already created' do
+      subject.create
+      expect { subject.create }.to raise_error "already created at #{time}"
+    end
   end
 
   it '#window' do

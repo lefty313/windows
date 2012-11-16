@@ -13,16 +13,6 @@ class WMCtrl
     pause
   end
 
-  def create_window(command)
-    raise "already created at #{created_at}" if created_at
-
-    window = spawn_window(command)
-
-    @id         = window.id
-    @created_at = Time.now
-    window
-  end
-
   def current_window
     raise "you must create window before using" unless id
     find_window(id)
@@ -65,12 +55,6 @@ class WMCtrl
     desktops.find {|d| d.id == id}
   end
 
-  private    
-
-  def pause
-    sleep 0.05
-  end
-
   def spawn_window(command)
     register_window do
       pid = Process.spawn(command, :out => :close, :err => :close)
@@ -79,4 +63,11 @@ class WMCtrl
   rescue Errno::ENOENT
     raise "Failed to create window with command: #{command}. Maybe a typo?"
   end
+  
+  private    
+
+  def pause
+    sleep 0.05
+  end
+
 end

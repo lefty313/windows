@@ -13,36 +13,10 @@ describe WMCtrl do
     create_desktops
   end
 
-  context "#create_window" do
-    before(:each) do
-      subject.stub(:register_window).and_return(window)
-      Time.stub!(:now).and_return(time)
-    end
-
-    it 'should return window' do
-      created_window = subject.create_window(command)
-      created_window.should == window
-    end
-
-    it 'should assign id' do
-      subject.create_window(command)
-      subject.id.should == window.id 
-    end
-
-    it 'should assign created_at' do
-      subject.create_window(command)
-      subject.created_at.should == time
-    end
-
-    it 'should raise exception when window is already created' do
-      subject.create_window(command)
-      expect { subject.create_window(command) }.to raise_error "already created at #{time}"
-    end
-
+  context "spawn_window" do
     it 'should raise exception when command not exist' do
-      subject.rspec_reset
       Process.stub(:spawn).and_raise(Errno::ENOENT)
-      expect { subject.create_window(command) }.to raise_error "Failed to create window with command: #{command}. Maybe a typo?"
+      expect { subject.spawn_window(command) }.to raise_error "Failed to create window with command: #{command}. Maybe a typo?"
     end
   end
 

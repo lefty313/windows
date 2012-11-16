@@ -7,9 +7,9 @@ module Windows
     class XWindow
       extend Forwardable
 
-      def_delegators :window, :id, :created_at, :title, :x, :y, :width, :height, :desktop
+      def_delegators :window, :title, :x, :y, :width, :height, :desktop
 
-      attr_reader :engine, :command
+      attr_reader :engine, :command, :created_at, :id
 
       def initialize(command, options = {}, engine = nil)
         @engine  = engine || WMCtrl.new
@@ -39,7 +39,12 @@ module Windows
       end
 
       def create
-        engine.create_window(command)
+        raise "already created at #{created_at}" if created_at
+
+        window = engine.spawn_window(command)
+
+        @id         = window.id
+        @created_at = Time.now
         self
       end
 
