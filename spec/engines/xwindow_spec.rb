@@ -50,42 +50,8 @@ describe Windows::Engines::XWindow do
   it { should delegate(:x).to(:window) }
   it { should delegate(:y).to(:window) }
   it { should delegate(:width).to(:window) }
-  it { should delegate(:height).to(:window) }
+  it { should delegate(:height).to(:window) } 
   it { should respond_to :command= }
-
-  context "return value" do
-    it '#create' do
-      subject.create.should == subject
-    end
-
-    it '#move' do
-      subject.move(:right).should == subject
-    end
-
-    it '#close' do
-      subject.close.should == subject
-    end
-
-    it '#focus' do
-      subject.focus.should == subject
-    end
-
-    it '#undock' do
-      subject.undock.should == subject
-    end
-
-    it '#on_top' do
-      subject.on_top.should == subject
-    end
-
-    it '#not_on_top' do
-      subject.not_on_top.should == subject
-    end
-
-    it '#create' do
-      subject.create.should == subject
-    end
-  end
 
   it '#move' do
     args = [100, 200, 500, 400]
@@ -157,11 +123,17 @@ describe Windows::Engines::XWindow do
     subject.not_on_top
   end
 
-  it '#action' do
-    args = [0, 0, 0, 100, 200]
+  context "#action" do
+    it 'should delegate to engine' do
+      args = [0, 0, 0, 100, 200]
 
-    engine.should_receive(:action).with(id, *args)
-    subject.action(*args)
+      engine.should_receive(:action).with(id, *args)
+      subject.action(*args)
+    end
+
+    it 'should return self' do
+      subject.action.should == subject
+    end
   end
 
   it '#maximize' do

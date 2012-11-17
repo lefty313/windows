@@ -69,6 +69,7 @@ module Windows
       def action(*args)
         create
         engine.action(id, *args)
+        self
       end
 
       def maximize
