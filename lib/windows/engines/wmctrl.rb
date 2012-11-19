@@ -33,12 +33,13 @@ class WMCtrl
       # wmctrl mark default desktop as -1
       desktop_id = w[:desktop].abs
       desktop = find_desktop(desktop_id)
-      Window.new(w[:id], w[:title], desktop, *w[:geometry])
+      Window.new(w[:id], w[:title], desktop, *w[:geometry], w[:active])
     end.sort_by(&:id)
     Collection.new(list)
   end
 
   def find_window(id)
+    return active_window if id == :active
     windows.find{ |w| w.id == id }
   end
 
