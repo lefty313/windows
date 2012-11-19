@@ -44,7 +44,8 @@ module Windows
       def create
         return false if created_at
 
-        window = engine.spawn_window(command)
+        window = engine.find_window(command)
+        window ||= engine.spawn_window(command)
 
         @id         = window.id
         @created_at = Time.now

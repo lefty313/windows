@@ -106,6 +106,12 @@ describe Windows::Engines::XWindow do
       subject.create
       subject.create.should be_false
     end
+
+    it 'should not spawn new window when it exist' do
+      engine.should_receive(:find_window).with(command).and_return(window)
+      engine.should_not_receive(:spawn_window).with(command)
+      subject.create
+    end
   end
 
   context '#window' do
