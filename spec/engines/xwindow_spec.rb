@@ -108,9 +108,24 @@ describe Windows::Engines::XWindow do
     end
   end
 
-  it '#window' do
-    engine.should_receive(:find_window).with(id)
-    subject.window
+  context '#window' do
+    context "when window is not created" do
+      it 'should create window' do
+        subject.should_receive(:create)
+        subject.window
+      end
+    end
+
+    context "when window is created" do
+      before do
+        subject.create
+      end
+
+      it 'should delegate to engine' do
+        engine.should_receive(:find_window).with(id)
+        subject.window
+      end
+    end
   end
 
   it '#on_top' do
