@@ -42,6 +42,10 @@ class WMCtrl
     windows.find{ |w| w.id == id }
   end
 
+  def active_window
+    windows.find(&:active)
+  end
+
   def find_desktop(id)
     desktops.find {|d| d.id == id}
   end

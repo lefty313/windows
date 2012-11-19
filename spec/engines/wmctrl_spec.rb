@@ -62,10 +62,19 @@ describe WMCtrl do
     end
   end
 
-  it "#find_windows" do
-    window = subject.find_window(2)
-    window.id.should == 2
-    window.should be_instance_of Windows::Structures::Window
+  context "#find_windows" do
+    it 'should find window by id' do
+      subject.find_window(2).id.should == 2
+    end
+
+    it 'should find active window' do
+      window = subject.find_window(:active)
+      window.active.should be_true
+    end
+
+    it 'should return Window' do
+      subject.find_window(2).should be_instance_of Windows::Structures::Window
+    end
   end
 
   private
@@ -86,7 +95,7 @@ describe WMCtrl do
     @windows = []
     @windows.push({id: 1, title: 'bash', desktop: 1, geometry: [0,0,100,200]})
     @windows.push({id: 3, title: 'torr', desktop: 2, geometry: [100,100,400,800]})
-    @windows.push({id: 2, title: 'list', desktop: 1, geometry: [50,50,200,400]})
+    @windows.push({id: 2, title: 'list', desktop: 1, geometry: [50,50,200,400], active: true})
     end
     sorted ? @windows.sort_by{|w| w[:id]} : @windows 
   end
