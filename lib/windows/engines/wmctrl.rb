@@ -1,4 +1,5 @@
 require 'wmctrl'
+require 'windows'
 require 'windows/structures'
 
 class WMCtrl
@@ -39,7 +40,7 @@ class WMCtrl
   end
 
   def find_window(id)
-    return active_window if id == :active
+    return active_window if id == Windows::ActiveWindowKey
     windows.find{ |w| w.id == id }
   end
 
