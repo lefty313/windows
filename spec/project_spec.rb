@@ -53,6 +53,13 @@ describe Windows::Project do
     end
   end
 
+  context "#default_terminal" do
+    it 'should return active window' do
+      subject.should_receive(:open_window).with(Windows::ActiveWindowKey)
+      subject.default_terminal
+    end
+  end
+
   def stub_window
     window = double("Window").as_null_object
     Windows::Window.should_receive(:new).with(command, args).and_return(window)

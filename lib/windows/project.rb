@@ -22,6 +22,10 @@ module Windows
       window
     end
 
+    def default_terminal
+      open_window(Windows::ActiveWindowKey)
+    end
+
   end
 end
 
