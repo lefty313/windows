@@ -40,7 +40,6 @@ class WMCtrl
   end
 
   def find_window(id)
-    return active_window if id == Windows::ActiveWindowKey
     windows.find{ |w| w.id == id }
   end
 

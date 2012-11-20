@@ -67,11 +67,6 @@ describe WMCtrl do
       subject.find_window(2).id.should == 2
     end
 
-    it 'should find active window' do
-      window = subject.find_window(:active)
-      window.active.should be_true
-    end
-
     it 'should return Window' do
       subject.find_window(2).should be_instance_of Windows::Structures::Window
     end
