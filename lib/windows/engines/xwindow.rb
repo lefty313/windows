@@ -21,24 +21,20 @@ module Windows
         args = convert_units(args)
         undock
         action(:move_resize, 0, *args)
-        self
       end
 
       def close
         action(:close)
         @id = false
         @created_at = false
-        self
       end
 
       def focus
         action(:activate)
-        self
       end
 
       def undock
         action(:change_state, "remove", "maximized_vert", "maximized_horz")
-        self
       end
 
       def create
@@ -59,12 +55,10 @@ module Windows
 
       def on_top
         action(:change_state, "add", "above")
-        self
       end
 
       def not_on_top
         action(:change_state, "remove", "above")
-        self
       end
 
       def action(*args)

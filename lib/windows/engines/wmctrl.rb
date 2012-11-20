@@ -1,5 +1,4 @@
 require 'wmctrl'
-require 'windows'
 require 'windows/structures'
 
 class WMCtrl
