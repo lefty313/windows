@@ -72,6 +72,10 @@ describe WMCtrl do
     end
   end
 
+  it '#active_window' do
+    subject.active_window.active.should be_true
+  end
+
   private
 
   def desktops
