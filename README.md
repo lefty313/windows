@@ -3,6 +3,8 @@ windows
 
 Ruby framework for manipulating Xwindow windows
 
+This video shows how it works https://www.youtube.com/watch?v=GBjkORt2Vhc
+
 ### Installation for unix system
 ```bash  
   sudo apt-get install libx11-dev libglib2.0-dev libxmu-dev
